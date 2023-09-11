@@ -84,50 +84,86 @@ describe('Lambdatest Demo Test', function() {
 });
 ```
 
+Below is how we are using lambdatest tunnel plugin in Webdriver IO
+```js
+// wdio.conf.js
+exports.config = {
+    // ...
+    user: process.env.LT_USERNAME,
+    key: process.env.LT_ACCESS_KEY,
+    logFile : './logDir/api.log',
+    services: [
+        ['lambdatest', {
+            tunnel: true
+        }]
+    ],
+    // ...
+};
+```
+
 Below is the config.js file where we will be declaring the desired capabilities.
 
 ``` js
-user= process.env.LT_USERNAME || "<your username>",
-key= process.env.LT_ACCESS_KEY || "<your accessKey>",
- 
 exports.config = {
- 
+  user: "ritamg",
+  key: "unknown",
+  logFile : './logDir/api.log',
+  services: [
+      ['lambdatest', {
+          tunnel: true
+      }]
+    ],
+
   updateJob: false,
-  user,
-  key,
-  specs: [
-    './tests/specs/single_test.js'
-  ],
+  specs: ["./tests/specs/single_test._1.js"],
   exclude: [],
- 
-  capabilities: [{
-    browserName: 'chrome',
-    version:"64.0",
-    name:"Test webdriverio",
-    build:"build 1",
-  }],
-  sync: true,
-  logLevel: 'info',
+
+  capabilities: [
+    {
+      browserName: "chrome",
+      version: "latest",
+      platform: "WIN10",
+      name: "webdriverIO-Multiple_test",
+      build: "webdriverIO-lambdatest",
+      visual: false,
+      video: true,
+      console: false,
+      network: false,
+      tunnel:true,
+    },
+  ],
+
+  logLevel: "info",
   coloredLogs: true,
-  screenshotPath: './errorShots/',
-  baseUrl: '',
-  waitforTimeout: 100000,
+  screenshotPath: "./errorShots/",
+  baseUrl: "",
+  waitforTimeout: 10000,
   connectionRetryTimeout: 90000,
-  connectionRetryCount: 1,
-  path: '/wd/hub',
-  hostname: 'hub.lambdatest.com',
+  connectionRetryCount: 3,
+  path: "/wd/hub",
+  hostname: "hub.lambdatest.com",
   port: 80,
- 
-  framework: 'mocha',
+
+  framework: "mocha",
   mochaOpts: {
-      ui: 'bdd'
-  }
-}
+    ui: "bdd",
+    timeout: 20000,
+  },
+};
+
 ```
 
 The Selenium WebDriver test would open a URL, mark the first two items in the list as done, add an item in the list, and return the total number of pending item. Your results would be displayed on the test console (or command-line interface if you are using terminal/cmd) and on [LambdaTest dashboard](https://accounts.lambdatest.com/dashboard/?utm_source=github&utm_medium=repo&utm_campaign=webdriverio-selenium). LambdaTest dashboard will help you view all your text logs, screenshots and video recording for your entire Selenium tests.
 
 ## Execute The Test
+
+Firstly install the dependenies with the command
+
+`npm i`
+
+Then install the nesaary dependency for tunnel plugin
+
+`npm i wdio-lambdatest-service --save-dev --force`
 
 You would need to execute the below command in your terminal/cmd.
 
