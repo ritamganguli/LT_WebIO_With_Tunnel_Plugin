@@ -5,9 +5,7 @@ trigger:
 
 pr:
 - '*'
-
-schedules:
-  - cron: '0 * * * *'  # Runs every hour at the beginning of the hour
+# Runs every hour at the beginning of the hour
 
 pool:
   vmImage: 'ubuntu-latest'
