@@ -1,0 +1,38 @@
+trigger:
+  branches:
+    exclude:
+      - '*'
+
+pr:
+- '*'
+
+schedules:
+  - cron: '0 * * * *'  # Runs every hour at the beginning of the hour
+
+pool:
+  vmImage: 'ubuntu-latest'
+
+jobs:
+- job: build
+  steps:
+  - checkout: self
+
+  - task: NodeTool@0
+    inputs:
+      versionSpec: '16'
+
+  - script: |
+      echo 'Start LambdaTest Tunnel'
+      ./path/to/lambda-test-action # Replace with the correct path to your LambdaTest action or use a pre-built action from the Azure DevOps marketplace
+    displayName: 'Start LambdaTest Tunnel'
+
+  - script: |
+      echo "Hello"
+      cd wdio_2
+      chmod +x ./node_modules/.bin/wdio
+      npm install selenium-webdriver 
+      npm install webdriverio
+      npm i
+      npm install
+      npm run single
+    displayName: 'Run Tests'
