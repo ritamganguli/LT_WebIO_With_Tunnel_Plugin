@@ -1,0 +1,49 @@
+trigger:
+  branches:
+    exclude:
+      - '*'
+
+pr:
+- '*'
+
+pool:
+  vmImage: 'ubuntu-latest'
+
+steps:
+- script: echo 'Starting Selenium Tests'
+  displayName: 'Start Selenium Tests'
+
+- script: |
+    echo 'Checkout Repository'
+    git checkout $(Build.SourceBranch)
+  displayName: 'Checkout Repository'
+
+- task: NodeTool@0
+  inputs:
+    versionSpec: '16'
+    displayName: 'Install Node.js'
+
+- script: |
+    echo 'Install Dependencies'
+    npm install
+  displayName: 'Install Dependencies'
+
+- script: |
+    echo 'Display Node.js version'
+    node -v
+  displayName: 'Display Node.js Version'
+
+- script: |
+    echo 'Install Selenium Webdriver'
+    npm install selenium-webdriver
+  displayName: 'Install Selenium Webdriver'
+
+- script: |
+    echo 'Install WebdriverIO'
+    npm install webdriverio
+  displayName: 'Install WebdriverIO'
+
+- script: |
+    echo 'Run Tests'
+    npm run single
+  displayName: 'Run Tests'
