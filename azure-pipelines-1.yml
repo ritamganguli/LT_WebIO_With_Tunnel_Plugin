@@ -19,10 +19,6 @@ jobs:
     inputs:
       versionSpec: '16'
 
-  - script: |
-      echo 'Start LambdaTest Tunnel'
-      ./path/to/lambda-test-action # Replace with the correct path to your LambdaTest action or use a pre-built action from the Azure DevOps marketplace
-    displayName: 'Start LambdaTest Tunnel'
 
   - script: |
       echo "Hello"
